@@ -1,4 +1,4 @@
-CC		= gcc
+CC		= g++
 CFLAGS	= -Wall -O2 -g
 LDFLAGS	= -lglfw -lGLU -lGL -lm
 
@@ -34,6 +34,6 @@ clean :
 	rm -rf $(OBJDIR)
 	rm -rf $(BINDIR)*
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
+$(OBJDIR)%.o: $(SRCDIR)%.cpp
 	mkdir -p `dirname $@`
 	$(CC) -o $@ -c $< $(CFLAGS)
