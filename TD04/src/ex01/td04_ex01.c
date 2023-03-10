@@ -143,8 +143,9 @@ int main(int argc, char **argv)
 		glScalef(10.0, 10.0, 1.0);
 		glColor3f(0.0, 0.0, 0.1);
 		drawSquare();
-		drawFrame();
 		glPopMatrix();
+
+		drawFrame();
 
 		/* Scene rendering */
 
