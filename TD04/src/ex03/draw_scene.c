@@ -3,15 +3,68 @@
 
 void drawBase()
 {
+    glPushMatrix();
+    glScalef(3.0, 3.0, 1.0);
+    glColor3f(0.92, 0.81, 0.20);
+    drawCircle();
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(2.0, 2.0, 10.0);
+    glColor3f(0.92, 0.81, 0.20);
+    drawCone();
+    glPopMatrix();
 }
 
 void drawArm()
 {
+    glPushMatrix();
+    glScalef(1.6, 1.6, 1.6);
+    glColor3f(0.92, 0.81, 0.20);
+    drawSphere();
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(-90, 0., 1, 0);
+    glScalef(1, 1, 10.0);
+    glColor3f(0.92, 0.81, 0.20);
+    drawCone();
+    glPopMatrix();
+
+    glPushMatrix();
+    glRotatef(-90, 0., -1, 0);
+    glScalef(1, 1, 10.0);
+    glColor3f(0.92, 0.81, 0.20);
+    drawCone();
+    glPopMatrix();
 }
 
 void drawPan()
 {
+    glPushMatrix();
+    glScalef(3.0, 3.0, 5.0);
+    glColor3f(0.33, 0.45, 0);
+    drawCircle();
+    glPopMatrix();
+
+    glPushMatrix();
+
+    glBegin(GL_LINES);
+
+    glColor3f(1, 0., 0);
+    glVertex3f(0., 0., 5.);
+    glVertex3f(cos(M_PI * 2) * 3, sin(M_PI * 2) * 3, 0);
+
+    glVertex3f(0., 0., 5.);
+    glVertex3f(cos(M_PI * 2 / 3) * 3, sin(M_PI * 2 / 3) * 3, 0);
+
+    glVertex3f(0., 0., 5.);
+    glVertex3f(-cos(M_PI * 2 / 6) * 3, -sin(M_PI * 2 / 6) * 3, 0);
+    glEnd();
+
+    glPopMatrix();
 }
+
 void drawFrame()
 {
     glBegin(GL_LINES);
@@ -31,27 +84,14 @@ void drawFrame()
     glEnd();
 }
 
-int rot = 0;
-
 void draw()
 {
-    rot = rot >= 360 ? 0 : rot + 1;
-
     glPushMatrix();
     glScalef(8.0, 8.0, 8.0);
     drawFrame();
     glPopMatrix();
 
-    glPushMatrix();
-    glTranslatef(0., 0., 5.);
-    glScalef(5, 5, 5);
-    drawCircle();
-    glPopMatrix();
-
-    glPushMatrix();
-    glRotatef(rot, 0., 0., 5);
-    glTranslatef(4., 0., 5.);
-    glColor3f(1, 0, 0);
-    drawSphere();
-    glPopMatrix();
+    // drawBase();
+    // drawArm();
+    drawPan();
 }
