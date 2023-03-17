@@ -22,59 +22,62 @@ static const double FRAMERATE_IN_SECONDS = 1. / 30.;
 static const float GL_VIEW_SIZE = 20.;
 
 /* Error handling function */
-void onError(int error, const char* description)
+void onError(int error, const char *description)
 {
 	fprintf(stderr, "GLFW Error: %s\n", description);
 }
 
-void onWindowResized(GLFWwindow* window, int width, int height)
+void onWindowResized(GLFWwindow *window, int width, int height)
 {
-	aspectRatio = width / (float) height;
+	aspectRatio = width / (float)height;
 
 	glViewport(0, 0, width, height);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
-	if( aspectRatio > 1)
+	if (aspectRatio > 1)
 	{
 		gluOrtho2D(
-		-GL_VIEW_SIZE / 2. * aspectRatio, GL_VIEW_SIZE / 2. * aspectRatio,
-		-GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.);
+			-GL_VIEW_SIZE / 2. * aspectRatio, GL_VIEW_SIZE / 2. * aspectRatio,
+			-GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.);
 	}
 	else
 	{
 		gluOrtho2D(
-		-GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.,
-		-GL_VIEW_SIZE / 2. / aspectRatio, GL_VIEW_SIZE / 2. / aspectRatio);
+			-GL_VIEW_SIZE / 2., GL_VIEW_SIZE / 2.,
+			-GL_VIEW_SIZE / 2. / aspectRatio, GL_VIEW_SIZE / 2. / aspectRatio);
 	}
 	glMatrixMode(GL_MODELVIEW);
-
 }
 
-void onKey(GLFWwindow* window, int key, int scancode, int action, int mods)
+void onKey(GLFWwindow *window, int key, int scancode, int action, int mods)
 {
-	if (action == GLFW_PRESS) {
-		switch(key) {
-			case GLFW_KEY_A :
-			case GLFW_KEY_ESCAPE :
-				glfwSetWindowShouldClose(window, GLFW_TRUE); 
-				break;
-			case GLFW_KEY_L :
-				glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-				break;
-			case GLFW_KEY_P :
-				glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
-				break;
-			default: fprintf(stdout,"Touche non gérée\n");
+	if (action == GLFW_PRESS)
+	{
+		switch (key)
+		{
+		case GLFW_KEY_A:
+		case GLFW_KEY_ESCAPE:
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
+			break;
+		case GLFW_KEY_L:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			break;
+		case GLFW_KEY_P:
+			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			break;
+		default:
+			fprintf(stdout, "Touche non gérée\n");
 		}
 	}
 }
 
-int main(int argc, char** argv) 
+int main(int argc, char **argv)
 {
 	/* GLFW initialisation */
-	GLFWwindow* window;
-	if (!glfwInit()) return -1;
+	GLFWwindow *window;
+	if (!glfwInit())
+		return -1;
 
 	/* Callback to a function if an error is rised by GLFW */
 	glfwSetErrorCallback(onError);
@@ -91,10 +94,10 @@ int main(int argc, char** argv)
 	/* Make the window's context current */
 	glfwMakeContextCurrent(window);
 
-	glfwSetWindowSizeCallback(window,onWindowResized);
+	glfwSetWindowSizeCallback(window, onWindowResized);
 	glfwSetKeyCallback(window, onKey);
 
-	onWindowResized(window,WINDOW_WIDTH,WINDOW_HEIGHT);
+	onWindowResized(window, WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	glPointSize(4.0);
 
@@ -105,14 +108,23 @@ int main(int argc, char** argv)
 		double startTime = glfwGetTime();
 
 		/* Cleaning buffers and setting Matrix Mode */
-		glClearColor(0.2,0.0,0.0,0.0);
+		glClearColor(0.2, 0.0, 0.0, 0.0);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 
 		/* RENDER HERE */
+		int x = 145, y = 105;
+		char filename = "logo_imac.jpg";
 
+		stbi_uc imageIMAC = stbi_load(filename, x, y, 3);
+
+		if (imageIMAC == NULL)
+		{
+			fprintf(stderr, "STBI Error: image NULL");
+			glfwSetWindowShouldClose(window, GLFW_TRUE);
+		}
 
 		/* Swap front and back buffers */
 		glfwSwapBuffers(window);
@@ -123,12 +135,13 @@ int main(int argc, char** argv)
 		/* Elapsed time computation from loop begining */
 		double elapsedTime = glfwGetTime() - startTime;
 		/* If to few time is spend vs our wanted FPS, we wait */
-		if(elapsedTime < FRAMERATE_IN_SECONDS) 
+		if (elapsedTime < FRAMERATE_IN_SECONDS)
 		{
-			glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS-elapsedTime);
+			glfwWaitEventsTimeout(FRAMERATE_IN_SECONDS - elapsedTime);
 		}
 	}
 
+	stbi_image_free((imageIMAC);
 	glfwTerminate();
 	return 0;
 }
