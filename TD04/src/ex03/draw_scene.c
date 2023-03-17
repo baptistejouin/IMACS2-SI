@@ -18,23 +18,22 @@ void drawBase()
 
 void drawArm()
 {
+    glColor3f(0.92, 0.64, 0.25);
+
     glPushMatrix();
     glScalef(1.6, 1.6, 1.6);
-    glColor3f(0.92, 0.81, 0.20);
     drawSphere();
     glPopMatrix();
 
     glPushMatrix();
     glRotatef(-90, 0., 1, 0);
     glScalef(1, 1, 10.0);
-    glColor3f(0.92, 0.81, 0.20);
     drawCone();
     glPopMatrix();
 
     glPushMatrix();
     glRotatef(-90, 0., -1, 0);
     glScalef(1, 1, 10.0);
-    glColor3f(0.92, 0.81, 0.20);
     drawCone();
     glPopMatrix();
 }
@@ -91,7 +90,16 @@ void draw()
     drawFrame();
     glPopMatrix();
 
-    // drawBase();
-    // drawArm();
+    drawBase();
+
+    glPushMatrix();
+    glTranslatef(0., 0., 10.);
+    drawArm();
+    glTranslatef(0., 0., -5.);
+    glTranslatef(10., 0., 0.);
     drawPan();
+    glTranslatef(-20., 0., 0.);
+    drawPan();
+
+    glPopMatrix();
 }
