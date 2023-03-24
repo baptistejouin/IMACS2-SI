@@ -101,6 +101,16 @@ int main(int argc, char **argv)
 
 	glPointSize(4.0);
 
+	int x, y, n;
+	unsigned char *imageIMAC = stbi_load("doc/logo_imac.jpg", &x, &y, &n, 0);
+
+	if (!imageIMAC)
+	{
+		fprintf(stdout, "Image non chargée\n");
+		glfwTerminate();
+		return -1;
+	}
+
 	/* Loop until the user closes the window */
 	while (!glfwWindowShouldClose(window))
 	{
@@ -115,10 +125,6 @@ int main(int argc, char **argv)
 		glLoadIdentity();
 
 		/* RENDER HERE */
-		int x = 145, y = 105;
-		char filename = "logo_imac.jpg";
-
-		stbi_uc imageIMAC = stbi_load(filename, x, y, 3);
 
 		if (imageIMAC == NULL)
 		{
@@ -141,7 +147,7 @@ int main(int argc, char **argv)
 		}
 	}
 
-	stbi_image_free((imageIMAC);
+	stbi_image_free(imageIMAC);
 	glfwTerminate();
 	return 0;
 }
