@@ -12,12 +12,18 @@ OBJDIR	= obj/
 OBJ_TD03_EX01= ex01/td04_ex01.o
 EXEC_TD03_EX01= td04_ex01.out
 
+# Fichiers exercice 02
+OBJ_TD03_EX02= ex02/td04_ex02.o
+EXEC_TD03_EX02= td04_ex02.out
+
 # Regles compilation TD 04
 
 all : ex01 #ex02
 
 ex01 : $(OBJDIR)$(OBJ_TD03_EX01)
 	$(CC) $(CFLAGS) $(OBJDIR)$(OBJ_TD03_EX01) -o $(BINDIR)$(EXEC_TD03_EX01) $(LDFLAGS)
+ex02 : $(OBJDIR)$(OBJ_TD03_EX02)
+	$(CC) $(CFLAGS) $(OBJDIR)$(OBJ_TD03_EX02) -o $(BINDIR)$(EXEC_TD03_EX02) $(LDFLAGS)
 
 clean :
 	rm -rf *~
