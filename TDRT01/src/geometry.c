@@ -1,4 +1,4 @@
-#include "../include/geometry.h"
+#include "geometry.h"
 
 Point3D createPoint(float x, float y, float z)
 {
